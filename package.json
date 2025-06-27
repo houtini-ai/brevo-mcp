@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "description": "Enhanced MCP server for Brevo email marketing platform with comprehensive analytics",
   "main": "index.js",
+  "bin": {
+    "brevo-mcp-server": "./index.js"
+  },
   "type": "module",
   "scripts": {
     "start": "node index.js",
