@@ -1,5 +1,5 @@
 {
-  "name": "brevo-mcp-server",
+  "name": "@richardbaxterseo/brevo-mcp-server",
   "version": "2.0.0",
   "description": "Enhanced MCP server for Brevo email marketing platform with comprehensive analytics",
   "main": "index.js",
@@ -12,14 +12,31 @@
     "dev": "node --watch index.js",
     "test": "node test.js"
   },
-  "keywords": ["mcp", "brevo", "email", "marketing"],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/richardbaxterseo/brevo-mcp-server.git"
+  },
+  "keywords": ["mcp", "brevo", "email", "marketing", "analytics", "model-context-protocol"],
+  "author": "Richard Baxter <your-email@example.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/richardbaxterseo/brevo-mcp-server/issues"
+  },
+  "homepage": "https://github.com/richardbaxterseo/brevo-mcp-server#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@getbrevo/brevo": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"
-  }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE",
+    "ANALYTICS_GUIDE.md"
+  ]
 }
