@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "brevo": {
+      "command": "node",
+      "args": ["/path/to/brevo-api-mcp/index.js"],
+      "env": {
+        "BREVO_API_KEY": "your_brevo_api_key_here"
+      }
+    }
+  }
+}

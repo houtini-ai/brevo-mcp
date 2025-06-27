@@ -1,0 +1,22 @@
+{
+  "name": "brevo-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Brevo email marketing platform",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "node test.js"
+  },
+  "keywords": ["mcp", "brevo", "email", "marketing"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@getbrevo/brevo": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}
