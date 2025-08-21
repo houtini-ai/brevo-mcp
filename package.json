@@ -1,6 +1,6 @@
 {
   "name": "@richardbaxterseo/brevo-mcp-server",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "MCP (Model Context Protocol) server for Brevo email marketing platform with comprehensive analytics",
   "keywords": [
     "mcp",

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2024-08-21
+
+### Fixed
+- Server now starts successfully without BREVO_API_KEY environment variable
+- API key validation moved from startup to runtime (when tools are called)
+- Improved error handling to work properly with Claude Desktop MCP protocol
+- Fixed dist/index.js to match source implementation
+
+### Changed
+- API key is now optional at startup, required only when making API calls
+- Better error messages when API key is missing during tool execution
+- Removed process.exit() calls that were breaking MCP protocol
+
 ## [2.1.0] - 2024-01-14
 
 ### Added

@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run tests
+      run: npm test
+      env:
+        CI: true
+    
+    - name: Build
+      run: npm run build
+    
+    - name: Create release archive
+      run: |
+        # Create a clean release directory
+        mkdir -p brevo-mcp-server
+        
+        # Copy necessary files
+        cp -r dist brevo-mcp-server/
+        cp package.json brevo-mcp-server/
+        cp package-lock.json brevo-mcp-server/
+        cp README.md brevo-mcp-server/
+        cp LICENSE brevo-mcp-server/
+        cp CHANGELOG.md brevo-mcp-server/
+        cp claude_desktop_config.example.json brevo-mcp-server/
+        
+        # Create ZIP archive
+        zip -r brevo-mcp-server-${{ github.ref_name }}.zip brevo-mcp-server/
+    
+    - name: Extract version changelog
+      id: changelog
+      run: |
+        # Extract the latest version's changelog
+        VERSION="${{ github.ref_name }}"
+        VERSION="${VERSION#v}"  # Remove 'v' prefix
+        
+        # Extract changelog section for this version
+        sed -n "/## \[${VERSION}\]/,/## \[/p" CHANGELOG.md | sed '$d' > release_notes.md
+        
+        # If empty, use a default message
+        if [ ! -s release_notes.md ]; then
+          echo "Release $VERSION" > release_notes.md
+          echo "" >> release_notes.md
+          echo "See CHANGELOG.md for details." >> release_notes.md
+        fi
+        
+        echo "Release notes:"
+        cat release_notes.md
+    
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: ${{ github.ref_name }}
+        body_path: release_notes.md
+        files: |
+          brevo-mcp-server-${{ github.ref_name }}.zip
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
