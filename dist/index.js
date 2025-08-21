@@ -2,10 +2,10 @@
 
 /**
  * Brevo MCP Server
- * 
+ *
  * MCP (Model Context Protocol) server for Brevo email marketing platform
  * Provides comprehensive email, contact, and analytics operations
- * 
+ *
  * @author Richard Baxter <richard@richardbaxter.co>
  * @license MIT
  */
@@ -45,21 +45,21 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        limit: { 
-          type: 'number', 
+        limit: {
+          type: 'number',
           description: 'Number of contacts to return (default: 50, max: 1000)',
           minimum: 1,
-          maximum: 1000
+          maximum: 1000,
         },
-        offset: { 
-          type: 'number', 
+        offset: {
+          type: 'number',
           description: 'Number of contacts to skip',
-          minimum: 0
+          minimum: 0,
         },
-        email: { 
-          type: 'string', 
+        email: {
+          type: 'string',
           description: 'Filter by email address',
-          format: 'email'
+          format: 'email',
         },
       },
     },
@@ -77,10 +77,10 @@ const TOOLS = [
             type: 'object',
             properties: {
               email: { type: 'string', format: 'email' },
-              name: { type: 'string' }
+              name: { type: 'string' },
             },
-            required: ['email']
-          }
+            required: ['email'],
+          },
         },
         subject: { type: 'string', description: 'Email subject line' },
         htmlContent: { type: 'string', description: 'HTML content of the email' },
@@ -92,29 +92,29 @@ const TOOLS = [
           description: 'Sender information',
           properties: {
             email: { type: 'string', format: 'email' },
-            name: { type: 'string' }
-          }
+            name: { type: 'string' },
+          },
         },
         replyTo: {
           type: 'object',
           description: 'Reply-to address',
           properties: {
             email: { type: 'string', format: 'email' },
-            name: { type: 'string' }
-          }
+            name: { type: 'string' },
+          },
         },
         tags: {
           type: 'array',
           description: 'Tags for the email',
-          items: { type: 'string' }
+          items: { type: 'string' },
         },
       },
       required: ['to'],
       oneOf: [
         { required: ['subject', 'htmlContent'] },
         { required: ['subject', 'textContent'] },
-        { required: ['templateId'] }
-      ]
+        { required: ['templateId'] },
+      ],
     },
   },
   {
@@ -123,26 +123,26 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        type: { 
-          type: 'string', 
+        type: {
+          type: 'string',
           description: 'Campaign type filter',
-          enum: ['classic', 'trigger']
+          enum: ['classic', 'trigger'],
         },
-        status: { 
-          type: 'string', 
+        status: {
+          type: 'string',
           description: 'Campaign status filter',
-          enum: ['sent', 'draft', 'archive', 'queued', 'suspended', 'inProcess']
+          enum: ['sent', 'draft', 'archive', 'queued', 'suspended', 'inProcess'],
         },
-        limit: { 
-          type: 'number', 
+        limit: {
+          type: 'number',
           description: 'Number of campaigns to return',
           minimum: 1,
-          maximum: 1000
+          maximum: 1000,
         },
-        offset: { 
-          type: 'number', 
+        offset: {
+          type: 'number',
           description: 'Number of campaigns to skip',
-          minimum: 0
+          minimum: 0,
         },
       },
     },
@@ -153,20 +153,20 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        campaignId: { 
-          type: 'number', 
+        campaignId: {
+          type: 'number',
           description: 'ID of the campaign',
-          minimum: 1
+          minimum: 1,
         },
-        startDate: { 
-          type: 'string', 
+        startDate: {
+          type: 'string',
           description: 'Start date for analytics (YYYY-MM-DD)',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
-        endDate: { 
-          type: 'string', 
+        endDate: {
+          type: 'string',
           description: 'End date for analytics (YYYY-MM-DD)',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
       },
       required: ['campaignId'],
@@ -178,26 +178,26 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        status: { 
-          type: 'string', 
+        status: {
+          type: 'string',
           description: 'Filter by campaign status',
-          enum: ['sent', 'draft', 'suspended']
+          enum: ['sent', 'draft', 'suspended'],
         },
-        startDate: { 
-          type: 'string', 
+        startDate: {
+          type: 'string',
           description: 'Filter campaigns modified after this date',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
-        endDate: { 
-          type: 'string', 
+        endDate: {
+          type: 'string',
           description: 'Filter campaigns modified before this date',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
-        limit: { 
-          type: 'number', 
+        limit: {
+          type: 'number',
           description: 'Maximum number of campaigns to analyze',
           minimum: 1,
-          maximum: 100
+          maximum: 100,
         },
       },
     },
@@ -208,25 +208,25 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        email: { 
-          type: 'string', 
+        email: {
+          type: 'string',
           description: 'Filter by specific email address',
-          format: 'email'
+          format: 'email',
         },
-        listId: { 
-          type: 'number', 
+        listId: {
+          type: 'number',
           description: 'Filter by list ID',
-          minimum: 1
+          minimum: 1,
         },
-        startDate: { 
-          type: 'string', 
+        startDate: {
+          type: 'string',
           description: 'Start date for engagement data',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
-        endDate: { 
-          type: 'string', 
+        endDate: {
+          type: 'string',
           description: 'End date for engagement data',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
       },
     },
@@ -241,17 +241,17 @@ const TOOLS = [
           type: 'string',
           description: 'Time period for analytics',
           enum: ['today', 'yesterday', 'last7days', 'last30days', 'custom'],
-          default: 'last7days'
+          default: 'last7days',
         },
         startDate: {
           type: 'string',
           description: 'Custom start date (required if period is "custom")',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
         endDate: {
           type: 'string',
           description: 'Custom end date (required if period is "custom")',
-          pattern: '^\\d{4}-\\d{2}-\\d{2}$'
+          pattern: '^\\d{4}-\\d{2}-\\d{2}$',
         },
       },
     },
@@ -262,26 +262,26 @@ const TOOLS = [
     inputSchema: {
       type: 'object',
       properties: {
-        campaignId: { 
-          type: 'number', 
+        campaignId: {
+          type: 'number',
           description: 'ID of the campaign',
-          minimum: 1
+          minimum: 1,
         },
-        status: { 
-          type: 'string', 
+        status: {
+          type: 'string',
           description: 'Filter by recipient status',
-          enum: ['sent', 'opened', 'clicked', 'unsubscribed', 'bounced']
+          enum: ['sent', 'opened', 'clicked', 'unsubscribed', 'bounced'],
         },
-        limit: { 
-          type: 'number', 
+        limit: {
+          type: 'number',
           description: 'Number of recipients to return',
           minimum: 1,
-          maximum: 1000
+          maximum: 1000,
         },
-        offset: { 
-          type: 'number', 
+        offset: {
+          type: 'number',
           description: 'Number of recipients to skip',
-          minimum: 0
+          minimum: 0,
         },
       },
       required: ['campaignId'],
@@ -322,14 +322,14 @@ class BrevoApiClient {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), CONFIG.REQUEST_TIMEOUT);
-      
+
       const response = await fetch(url, {
         ...config,
-        signal: controller.signal
+        signal: controller.signal,
       });
-      
+
       clearTimeout(timeoutId);
-      
+
       if (!response.ok) {
         await this.handleErrorResponse(response);
       }
@@ -349,58 +349,62 @@ class BrevoApiClient {
   async handleErrorResponse(response) {
     const errorText = await response.text();
     let errorObj;
-    
+
     try {
       errorObj = JSON.parse(errorText);
     } catch {
       errorObj = { message: errorText };
     }
-    
+
     switch (response.status) {
-      case 400:
-        throw new BrevoApiError(400, 'Bad request', errorObj);
-      case 401:
-        if (errorObj.message?.includes('IP address')) {
-          throw new BrevoApiError(
-            401,
-            'Authentication failed: Your IP address needs to be whitelisted. ' +
-            'Visit https://app.brevo.com/security/authorised_ips',
-            errorObj
-          );
-        }
-        throw new BrevoApiError(401, 'Authentication failed', errorObj);
-      case 403:
-        throw new BrevoApiError(403, 'Access forbidden', errorObj);
-      case 404:
-        throw new BrevoApiError(404, 'Resource not found', errorObj);
-      case 429:
-        throw new BrevoApiError(429, 'Rate limit exceeded', errorObj);
-      case 500:
-        throw new BrevoApiError(500, 'Server error', errorObj);
-      default:
+    case 400:
+      throw new BrevoApiError(400, 'Bad request', errorObj);
+    case 401:
+      if (errorObj.message?.includes('IP address')) {
         throw new BrevoApiError(
-          response.status,
-          errorObj.message || 'Unknown error',
-          errorObj
+          401,
+          'Authentication failed: Your IP address needs to be whitelisted. ' +
+            'Visit https://app.brevo.com/security/authorised_ips',
+          errorObj,
         );
+      }
+      throw new BrevoApiError(401, 'Authentication failed', errorObj);
+    case 403:
+      throw new BrevoApiError(403, 'Access forbidden', errorObj);
+    case 404:
+      throw new BrevoApiError(404, 'Resource not found', errorObj);
+    case 429:
+      throw new BrevoApiError(429, 'Rate limit exceeded', errorObj);
+    case 500:
+      throw new BrevoApiError(500, 'Server error', errorObj);
+    default:
+      throw new BrevoApiError(
+        response.status,
+        errorObj.message || 'Unknown error',
+        errorObj,
+      );
     }
   }
 }
 
 class BrevoAnalyticsService {
   static calculatePercentageChange(current, previous) {
-    if (previous === 0) return current > 0 ? 100 : 0;
+    if (previous === 0) {
+      return current > 0 ? 100 : 0;
+    }
     return ((current - previous) / previous * 100).toFixed(2);
   }
 
   static calculateRates(stats) {
     const sent = stats.sent || 0;
-    if (sent === 0) return {
-      openRate: 0,
-      clickRate: 0,
-      bounceRate: 0,
-      unsubscribeRate: 0,
-    };
+    if (sent === 0) {
+      return {
+        openRate: 0,
+        clickRate: 0,
+        bounceRate: 0,
+        unsubscribeRate: 0,
+      };
+    }
 
     return {
       openRate: ((stats.uniqueOpens || 0) / sent * 100).toFixed(2),
@@ -411,99 +415,112 @@ class BrevoAnalyticsService {
   }
 
   static determineEngagementLevel(opens, clicks, total) {
-    if (total === 0) return 'No Activity';
+    if (total === 0) {
+      return 'No Activity';
+    }
     const openRate = opens / total;
     const clickRate = clicks / total;
-    
-    if (clickRate > 0.1) return 'Highly Engaged';
-    if (clickRate > 0.05) return 'Engaged';
-    if (openRate > 0.2) return 'Moderately Engaged';
-    if (openRate > 0) return 'Low Engagement';
+
+    if (clickRate > 0.1) {
+      return 'Highly Engaged';
+    }
+    if (clickRate > 0.05) {
+      return 'Engaged';
+    }
+    if (openRate > 0.2) {
+      return 'Moderately Engaged';
+    }
+    if (openRate > 0) {
+      return 'Low Engagement';
+    }
     return 'Not Engaged';
   }
 
   static generateInsights(metrics) {
     const insights = [];
-    
+
     // Email performance insights
     if (metrics.emails) {
       const { sent, delivered, openRate, clickRate } = metrics.emails;
-      
+
       if (openRate > 25) {
         insights.push('Strong email open rates indicate good subject lines and sender reputation');
       } else if (openRate < 15) {
         insights.push('Low open rates suggest need for subject line optimization');
       }
-      
+
       if (clickRate > 5) {
         insights.push('Excellent click-through rates show engaging content');
       } else if (clickRate < 2) {
         insights.push('Consider improving email content and CTAs for better engagement');
       }
-      
+
       const deliveryRate = sent > 0 ? (delivered / sent * 100) : 0;
       if (deliveryRate < 95) {
         insights.push('Delivery rate below 95% - review list hygiene and sender reputation');
       }
     }
-    
+
     // Contact insights
     if (metrics.contacts) {
       const { total, active, growthRate } = metrics.contacts;
-      
+
       if (growthRate > 10) {
         insights.push('Strong list growth - maintain engagement to prevent churn');
       } else if (growthRate < 0) {
         insights.push('Negative list growth - focus on acquisition and retention');
       }
-      
+
       const activeRate = total > 0 ? (active / total * 100) : 0;
       if (activeRate < 50) {
         insights.push('Low active contact rate - consider re-engagement campaigns');
       }
     }
-    
+
     return insights;
   }
 
   static getDateRange(period, startDate, endDate) {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
+
     switch (period) {
-      case 'today':
-        return {
-          start: today.toISOString().split('T')[0],
-          end: today.toISOString().split('T')[0],
-        };
-      case 'yesterday':
-        const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
-        return {
-          start: yesterday.toISOString().split('T')[0],
-          end: yesterday.toISOString().split('T')[0],
-        };
-      case 'last7days':
-        const week = new Date(today);
-        week.setDate(week.getDate() - 7);
-        return {
-          start: week.toISOString().split('T')[0],
-          end: today.toISOString().split('T')[0],
-        };
-      case 'last30days':
-        const month = new Date(today);
-        month.setDate(month.getDate() - 30);
-        return {
-          start: month.toISOString().split('T')[0],
-          end: today.toISOString().split('T')[0],
-        };
-      case 'custom':
-        if (!startDate || !endDate) {
-          throw new Error('Start date and end date required for custom period');
-        }
-        return { start: startDate, end: endDate };
-      default:
-        throw new Error(`Invalid period: ${period}`);
+    case 'today':
+      return {
+        start: today.toISOString().split('T')[0],
+        end: today.toISOString().split('T')[0],
+      };
+    case 'yesterday': {
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      return {
+        start: yesterday.toISOString().split('T')[0],
+        end: yesterday.toISOString().split('T')[0],
+      };
+    }
+    case 'last7days': {
+      const week = new Date(today);
+      week.setDate(week.getDate() - 7);
+      return {
+        start: week.toISOString().split('T')[0],
+        end: today.toISOString().split('T')[0],
+      };
+    }
+    case 'last30days': {
+      const month = new Date(today);
+      month.setDate(month.getDate() - 30);
+      return {
+        start: month.toISOString().split('T')[0],
+        end: today.toISOString().split('T')[0],
+      };
+    }
+    case 'custom':
+      if (!startDate || !endDate) {
+        throw new Error('Start date and end date required for custom period');
+      }
+      return { start: startDate, end: endDate };
+    default:
+      throw new Error(`Invalid period: ${period}`);
     }
   }
 }
@@ -519,9 +536,9 @@ class BrevoMCPServer {
         capabilities: {
           tools: {},
         },
-      }
+      },
     );
-    
+
     this.apiClient = null;
     this.setupToolHandlers();
   }
@@ -535,7 +552,7 @@ class BrevoMCPServer {
       if (!this.apiClient) {
         throw new McpError(
           ErrorCode.InternalError,
-          'Brevo API key not configured. Set the BREVO_API_KEY environment variable.'
+          'Brevo API key not configured. Set the BREVO_API_KEY environment variable.',
         );
       }
 
@@ -543,40 +560,40 @@ class BrevoMCPServer {
 
       try {
         let result;
-        
+
         switch (tool) {
-          case 'get_account_info':
-            result = await this.getAccountInfo();
-            break;
-          case 'get_contacts':
-            result = await this.getContacts(args);
-            break;
-          case 'send_email':
-            result = await this.sendEmail(args);
-            break;
-          case 'get_email_campaigns':
-            result = await this.getEmailCampaigns(args);
-            break;
-          case 'get_campaign_analytics':
-            result = await this.getCampaignAnalytics(args);
-            break;
-          case 'get_campaigns_performance':
-            result = await this.getCampaignsPerformance(args);
-            break;
-          case 'get_contact_analytics':
-            result = await this.getContactAnalytics(args);
-            break;
-          case 'get_analytics_summary':
-            result = await this.getAnalyticsSummary(args);
-            break;
-          case 'get_campaign_recipients':
-            result = await this.getCampaignRecipients(args);
-            break;
-          default:
-            throw new McpError(
-              ErrorCode.MethodNotFound,
-              `Unknown tool: ${tool}`
-            );
+        case 'get_account_info':
+          result = await this.getAccountInfo();
+          break;
+        case 'get_contacts':
+          result = await this.getContacts(args);
+          break;
+        case 'send_email':
+          result = await this.sendEmail(args);
+          break;
+        case 'get_email_campaigns':
+          result = await this.getEmailCampaigns(args);
+          break;
+        case 'get_campaign_analytics':
+          result = await this.getCampaignAnalytics(args);
+          break;
+        case 'get_campaigns_performance':
+          result = await this.getCampaignsPerformance(args);
+          break;
+        case 'get_contact_analytics':
+          result = await this.getContactAnalytics(args);
+          break;
+        case 'get_analytics_summary':
+          result = await this.getAnalyticsSummary(args);
+          break;
+        case 'get_campaign_recipients':
+          result = await this.getCampaignRecipients(args);
+          break;
+        default:
+          throw new McpError(
+            ErrorCode.MethodNotFound,
+            `Unknown tool: ${tool}`,
+          );
         }
 
         return {
@@ -591,18 +608,18 @@ class BrevoMCPServer {
         if (error instanceof McpError) {
           throw error;
         }
-        
+
         if (error instanceof BrevoApiError) {
           throw new McpError(
             ErrorCode.InternalError,
             `Brevo API Error (${error.statusCode}): ${error.message}`,
-            error.details
+            error.details,
           );
         }
-        
+
         throw new McpError(
           ErrorCode.InternalError,
-          `Error executing ${tool}: ${error.message}`
+          `Error executing ${tool}: ${error.message}`,
         );
       }
     });
@@ -610,7 +627,7 @@ class BrevoMCPServer {
 
   async getAccountInfo() {
     const account = await this.apiClient.request('/account');
-    
+
     return {
       email: account.email,
       firstName: account.firstName,
@@ -619,7 +636,7 @@ class BrevoMCPServer {
       plan: account.plan?.[0]?.type || 'Free',
       credits: {
         emailCredits: account.plan?.[0]?.credits || 0,
-        smsCredits: account.plan?.[0]?.creditsType === 'sendLimit' ? 
+        smsCredits: account.plan?.[0]?.creditsType === 'sendLimit' ?
           account.plan?.[0]?.credits : 0,
       },
       features: account.plan?.[0]?.features || [],
@@ -634,7 +651,7 @@ class BrevoMCPServer {
       offset: (args.offset || 0).toString(),
     });
 
-    const endpoint = args.email 
+    const endpoint = args.email
       ? `/contacts/${encodeURIComponent(args.email)}`
       : `/contacts?${params}`;
 
@@ -647,7 +664,7 @@ class BrevoMCPServer {
     }
 
     const response = await this.apiClient.request(endpoint);
-    
+
     return {
       contacts: response.contacts || [],
       count: response.count || 0,
@@ -698,7 +715,7 @@ class BrevoMCPServer {
     });
 
     const response = await this.apiClient.request(`/emailCampaigns?${params}`);
-    
+
     return {
       campaigns: response.campaigns || [],
       count: response.count || 0,
@@ -717,14 +734,18 @@ class BrevoMCPServer {
 
     while (!campaign && offset < CONFIG.MAX_CAMPAIGNS_SEARCH) {
       const campaigns = await this.apiClient.request(
-        `/emailCampaigns?limit=${batchSize}&offset=${offset}`
+        `/emailCampaigns?limit=${batchSize}&offset=${offset}`,
       );
-      
+
       campaign = campaigns.campaigns?.find(c => c.id === args.campaignId);
-      if (campaign) break;
-      
+      if (campaign) {
+        break;
+      }
+
       offset += batchSize;
-      if (!campaigns.campaigns || campaigns.campaigns.length < batchSize) break;
+      if (!campaigns.campaigns || campaigns.campaigns.length < batchSize) {
+        break;
+      }
     }
 
     if (!campaign) {
@@ -732,7 +753,7 @@ class BrevoMCPServer {
     }
 
     // Get campaign statistics
-    const stats = campaign.statistics?.campaignStats?.[0] || 
+    const stats = campaign.statistics?.campaignStats?.[0] ||
                   campaign.statistics?.globalStats || {};
 
     // Calculate engagement metrics
@@ -781,36 +802,44 @@ class BrevoMCPServer {
     while (allCampaigns.length < maxCampaigns) {
       params.set('offset', offset.toString());
       const response = await this.apiClient.request(`/emailCampaigns?${params}`);
-      
-      if (!response.campaigns || response.campaigns.length === 0) break;
-      
+
+      if (!response.campaigns || response.campaigns.length === 0) {
+        break;
+      }
+
       // Filter by date if provided
       let campaigns = response.campaigns;
       if (args.startDate || args.endDate) {
         campaigns = campaigns.filter(campaign => {
           const sentDate = new Date(campaign.sentDate);
-          if (args.startDate && sentDate < new Date(args.startDate)) return false;
-          if (args.endDate && sentDate > new Date(args.endDate)) return false;
+          if (args.startDate && sentDate < new Date(args.startDate)) {
+            return false;
+          }
+          if (args.endDate && sentDate > new Date(args.endDate)) {
+            return false;
+          }
           return true;
         });
       }
-      
+
       allCampaigns = allCampaigns.concat(campaigns);
-      
+
       if (allCampaigns.length >= maxCampaigns) {
         allCampaigns = allCampaigns.slice(0, maxCampaigns);
         break;
       }
-      
+
       offset += CONFIG.DEFAULT_BATCH_SIZE;
-      if (response.campaigns.length < CONFIG.DEFAULT_BATCH_SIZE) break;
+      if (response.campaigns.length < CONFIG.DEFAULT_BATCH_SIZE) {
+        break;
+      }
     }
 
     // Calculate aggregate statistics
     const totalStats = allCampaigns.reduce((acc, campaign) => {
-      const stats = campaign.statistics?.campaignStats?.[0] || 
+      const stats = campaign.statistics?.campaignStats?.[0] ||
                     campaign.statistics?.globalStats || {};
-      
+
       return {
         sent: acc.sent + (stats.sent || 0),
         delivered: acc.delivered + (stats.delivered || 0),
@@ -835,10 +864,10 @@ class BrevoMCPServer {
     // Get top performers
     const topPerformers = allCampaigns
       .map(campaign => {
-        const stats = campaign.statistics?.campaignStats?.[0] || 
+        const stats = campaign.statistics?.campaignStats?.[0] ||
                       campaign.statistics?.globalStats || {};
         const rates = BrevoAnalyticsService.calculateRates(stats);
-        
+
         return {
           id: campaign.id,
           name: campaign.name,
@@ -872,7 +901,7 @@ class BrevoMCPServer {
         subject: campaign.subject,
         status: campaign.status,
         sentDate: campaign.sentDate,
-        statistics: campaign.statistics?.campaignStats?.[0] || 
+        statistics: campaign.statistics?.campaignStats?.[0] ||
                     campaign.statistics?.globalStats || {},
       })),
     };
@@ -885,8 +914,8 @@ class BrevoMCPServer {
       limit: args.email ? 1 : 100,
     });
 
-    const contacts = args.email 
-      ? contactsResponse.contacts 
+    const contacts = args.email
+      ? contactsResponse.contacts
       : contactsResponse.contacts.slice(0, 20); // Limit analysis to 20 contacts
 
     // Analyze engagement for each contact
@@ -894,7 +923,7 @@ class BrevoMCPServer {
       const opens = contact.openedCount || 0;
       const clicks = contact.clickedCount || 0;
       const total = contact.sentCount || 0;
-      
+
       return {
         email: contact.email,
         id: contact.id,
@@ -915,7 +944,7 @@ class BrevoMCPServer {
     // Calculate aggregate metrics
     const totalContacts = contactAnalytics.length;
     const engagedContacts = contactAnalytics.filter(
-      c => c.engagement.level !== 'Not Engaged' && c.engagement.level !== 'No Activity'
+      c => c.engagement.level !== 'Not Engaged' && c.engagement.level !== 'No Activity',
     ).length;
     const blacklistedContacts = contactAnalytics.filter(c => c.engagement.blacklisted).length;
 
@@ -923,8 +952,8 @@ class BrevoMCPServer {
       summary: {
         totalAnalyzed: totalContacts,
         engagedContacts,
-        engagementRate: totalContacts > 0 
-          ? ((engagedContacts / totalContacts) * 100).toFixed(2) 
+        engagementRate: totalContacts > 0
+          ? ((engagedContacts / totalContacts) * 100).toFixed(2)
           : 0,
         blacklistedCount: blacklistedContacts,
       },
@@ -944,7 +973,7 @@ class BrevoMCPServer {
     const dateRange = BrevoAnalyticsService.getDateRange(
       period,
       args.startDate,
-      args.endDate
+      args.endDate,
     );
 
     // Get campaigns for the period
@@ -973,19 +1002,19 @@ class BrevoMCPServer {
     const changes = {
       sent: BrevoAnalyticsService.calculatePercentageChange(
         currentStats.sent,
-        previousStats.sent
+        previousStats.sent,
       ),
       delivered: BrevoAnalyticsService.calculatePercentageChange(
         currentStats.delivered,
-        previousStats.delivered
+        previousStats.delivered,
       ),
       opens: BrevoAnalyticsService.calculatePercentageChange(
         currentStats.uniqueOpens,
-        previousStats.uniqueOpens
+        previousStats.uniqueOpens,
       ),
       clicks: BrevoAnalyticsService.calculatePercentageChange(
         currentStats.uniqueClicks,
-        previousStats.uniqueClicks
+        previousStats.uniqueClicks,
       ),
     };
 
@@ -1050,7 +1079,7 @@ class BrevoMCPServer {
       });
 
       const response = await this.apiClient.request(
-        `/emailCampaigns/${args.campaignId}/recipients?${params}`
+        `/emailCampaigns/${args.campaignId}/recipients?${params}`,
       );
 
       return {
@@ -1062,7 +1091,7 @@ class BrevoMCPServer {
       if (error.statusCode === 404) {
         // Fallback: Get campaign details instead
         const campaign = await this.getCampaignAnalytics({ campaignId: args.campaignId });
-        
+
         return {
           campaignId: args.campaignId,
           message: 'Recipient details not available. Campaign statistics provided instead.',
@@ -1083,10 +1112,10 @@ class BrevoMCPServer {
 
     try {
       this.apiClient = new BrevoApiClient(apiKey, CONFIG.API_BASE_URL);
-      
+
       const transport = new StdioServerTransport();
       await this.server.connect(transport);
-      
+
       console.error('Brevo MCP server running on stdio');
     } catch (error) {
       console.error('Failed to start server:', error);
