@@ -1,0 +1,30 @@
+{
+  "testEnvironment": "node",
+  "coverageDirectory": "coverage",
+  "collectCoverageFrom": [
+    "src/**/*.js",
+    "index.js",
+    "!src/**/*.test.js",
+    "!src/**/*.spec.js"
+  ],
+  "testMatch": [
+    "**/tests/**/*.test.js",
+    "**/tests/**/*.spec.js"
+  ],
+  "transform": {
+    "^.+\\.js$": ["babel-jest", {
+      "presets": [["@babel/preset-env", { "targets": { "node": "18" } }]]
+    }]
+  },
+  "moduleFileExtensions": ["js", "json"],
+  "verbose": true,
+  "testTimeout": 30000,
+  "coverageThreshold": {
+    "global": {
+      "branches": 80,
+      "functions": 80,
+      "lines": 80,
+      "statements": 80
+    }
+  }
+}
