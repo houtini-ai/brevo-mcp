@@ -3,7 +3,6 @@
  * Orchestrates all Brevo operations
  */
 
-import { CONFIG } from '../config/constants.js';
 import { BrevoAnalyticsService } from './analytics.js';
 import { EmailService } from './email.js';
 import { ContactsService } from './contacts.js';
@@ -28,7 +27,7 @@ export class BrevoService {
       plan: response.plan?.[0]?.type || 'unknown',
       credits: {
         emailCredits: response.plan?.[0]?.credits || 0,
-        smsCredits: response.plan?.[0]?.creditsType === 'sendLimit' ? 
+        smsCredits: response.plan?.[0]?.creditsType === 'sendLimit' ?
           response.plan?.[0]?.credits : 0,
       },
       features: response.plan?.[0]?.features || [],
@@ -71,9 +70,11 @@ export class BrevoService {
       startDate = endDate = now.toISOString().split('T')[0];
       break;
     case 'yesterday':
-      const yesterday = new Date(now);
-      yesterday.setDate(yesterday.getDate() - 1);
-      startDate = endDate = yesterday.toISOString().split('T')[0];
+      {
+        const yesterday = new Date(now);
+        yesterday.setDate(yesterday.getDate() - 1);
+        startDate = endDate = yesterday.toISOString().split('T')[0];
+      }
       break;
     case 'last7days':
       startDate = new Date(now.setDate(now.getDate() - 7)).toISOString().split('T')[0];
@@ -84,11 +85,13 @@ export class BrevoService {
       endDate = new Date().toISOString().split('T')[0];
       break;
     case 'custom':
-      if (!args.startDate || !args.endDate) {
-        throw new Error('startDate and endDate required for custom period');
+      {
+        if (!args.startDate || !args.endDate) {
+          throw new Error('startDate and endDate required for custom period');
+        }
+        startDate = args.startDate;
+        endDate = args.endDate;
       }
-      startDate = args.startDate;
-      endDate = args.endDate;
       break;
     default:
       startDate = new Date(now.setDate(now.getDate() - 7)).toISOString().split('T')[0];
@@ -104,10 +107,7 @@ export class BrevoService {
 
     // Calculate overall statistics
     const currentStats = campaignsData.aggregateStats || {};
-    const previousPeriodDays = Math.ceil(
-      (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24),
-    );
-    
+
     // For comparison, we'd need to fetch previous period data
     // For now, we'll simulate with reduced values
     const previousStats = {
@@ -120,20 +120,20 @@ export class BrevoService {
     // Calculate changes
     const changes = {
       sent: BrevoAnalyticsService.calculatePercentageChange(
-        currentStats.sent, 
-        previousStats.sent
+        currentStats.sent,
+        previousStats.sent,
       ),
       delivered: BrevoAnalyticsService.calculatePercentageChange(
-        currentStats.delivered, 
-        previousStats.delivered
+        currentStats.delivered,
+        previousStats.delivered,
       ),
       opens: BrevoAnalyticsService.calculatePercentageChange(
-        currentStats.opens, 
-        previousStats.opens
+        currentStats.opens,
+        previousStats.opens,
       ),
       clicks: BrevoAnalyticsService.calculatePercentageChange(
-        currentStats.clicks, 
-        previousStats.clicks
+        currentStats.clicks,
+        previousStats.clicks,
       ),
     };
 
@@ -163,7 +163,6 @@ export class BrevoService {
       overview: {
         totalContacts: contactsData.totalContacts,
         totalCampaigns: campaignsData.count,
-        totalContacts: contactsData.totalContacts,
         emailsSent: currentStats.sent,
         emailsDelivered: currentStats.delivered,
       },

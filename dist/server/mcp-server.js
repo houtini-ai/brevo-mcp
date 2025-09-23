@@ -56,31 +56,31 @@ export class BrevoMCPServer {
         switch (toolName) {
         case 'get_account_info':
           return await this.brevoService.getAccountInfo();
-        
+
         case 'get_contacts':
           return await this.brevoService.getContacts(args);
-        
+
         case 'send_email':
           return await this.brevoService.sendEmail(args);
-        
+
         case 'get_email_campaigns':
           return await this.brevoService.getEmailCampaigns(args);
-        
+
         case 'get_campaign_analytics':
           return await this.brevoService.getCampaignAnalytics(args);
-        
+
         case 'get_campaigns_performance':
           return await this.brevoService.getCampaignsPerformance(args);
-        
+
         case 'get_contact_analytics':
           return await this.brevoService.getContactAnalytics(args);
-        
+
         case 'get_analytics_summary':
           return await this.brevoService.getAnalyticsSummary(args);
-        
+
         case 'get_campaign_recipients':
           return await this.brevoService.getCampaignRecipients(args);
-        
+
         default:
           throw new McpError(
             ErrorCode.MethodNotFound,

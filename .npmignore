@@ -1,61 +1,70 @@
 # NPM Ignore - Files to exclude from NPM package
 
-# Source files (only include compiled dist)
+# Keep only compiled dist files
 src/
+scripts/
 *.js
 !dist/**/*.js
 
-# Development files
+# Development and test files
 .github/
 .vscode/
 .idea/
 .git/
-
-# Testing
 tests/
 test/
+test.js
+test-analytics.js
 *.test.js
 *.spec.js
 coverage/
 .nyc_output/
 jest.config.js
+fix-build.js
 
-# Configuration
+# Configuration files
 .eslintrc*
 .prettierrc*
 .babelrc*
+.gitignore*
 tsconfig.json
 .editorconfig
+.npmrc
 
-# Documentation (except main README)
+# Documentation (keep essential docs)
 docs/
+examples/
+example/
+demo/
 *.md
 !README.md
 !CHANGELOG.md
 !LICENSE
+ANALYTICS_GUIDE.md
+examples.md
 
-# Examples and demos
-examples/
-example/
-demo/
-
-# Build and dev
-scripts/
-*.config.js
+# Example configurations
+claude_desktop_config.example.json
 
 # Environment
 .env*
 !.env.example
+
+# Build artifacts to exclude
+dist/index-monolithic.js
 
 # OS and IDE
 .DS_Store
 Thumbs.db
 *.swp
 *.swo
+*.bak
+*.backup
 
 # Logs
 *.log
 npm-debug.log*
+yarn-error.log*
 
 # Temporary
 temp/

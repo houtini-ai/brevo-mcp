@@ -141,10 +141,10 @@ BREVO_API_KEY=your-key npm test
 
 ## License
 
-MIT © Richard Baxter
+MIT © Houtini Ltd
 
 ## Support
 
-- Issues: [GitHub Issues](https://github.com/richardbaxterseo/brevo-mcp-server/issues)
-- Email: richard@richardbaxter.co
+- Issues: [GitHub Issues](https://github.com/houtini-ai/brevo-mcp/issues)
+- Email: brevo@houtini.ai
 - Documentation: [Brevo API Docs](https://developers.brevo.com/reference)

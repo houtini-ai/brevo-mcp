@@ -3,8 +3,6 @@
  * Handles all email-related operations
  */
 
-import { CONFIG } from '../config/constants.js';
-
 export class EmailService {
   constructor(apiClient) {
     this.apiClient = apiClient;
