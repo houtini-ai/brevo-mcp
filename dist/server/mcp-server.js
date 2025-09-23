@@ -53,33 +53,43 @@ export class BrevoMCPServer {
       const { name: toolName, arguments: args } = request.params;
 
       try {
+        let result;
         switch (toolName) {
         case 'get_account_info':
-          return await this.brevoService.getAccountInfo();
+          result = await this.brevoService.getAccountInfo();
+          break;
 
         case 'get_contacts':
-          return await this.brevoService.getContacts(args);
+          result = await this.brevoService.getContacts(args);
+          break;
 
         case 'send_email':
-          return await this.brevoService.sendEmail(args);
+          result = await this.brevoService.sendEmail(args);
+          break;
 
         case 'get_email_campaigns':
-          return await this.brevoService.getEmailCampaigns(args);
+          result = await this.brevoService.getEmailCampaigns(args);
+          break;
 
         case 'get_campaign_analytics':
-          return await this.brevoService.getCampaignAnalytics(args);
+          result = await this.brevoService.getCampaignAnalytics(args);
+          break;
 
         case 'get_campaigns_performance':
-          return await this.brevoService.getCampaignsPerformance(args);
+          result = await this.brevoService.getCampaignsPerformance(args);
+          break;
 
         case 'get_contact_analytics':
-          return await this.brevoService.getContactAnalytics(args);
+          result = await this.brevoService.getContactAnalytics(args);
+          break;
 
         case 'get_analytics_summary':
-          return await this.brevoService.getAnalyticsSummary(args);
+          result = await this.brevoService.getAnalyticsSummary(args);
+          break;
 
         case 'get_campaign_recipients':
-          return await this.brevoService.getCampaignRecipients(args);
+          result = await this.brevoService.getCampaignRecipients(args);
+          break;
 
         default:
           throw new McpError(
@@ -87,6 +97,16 @@ export class BrevoMCPServer {
             `Unknown tool: ${toolName}`,
           );
         }
+
+        // Return the result wrapped in the MCP response format
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(result, null, 2),
+            },
+          ],
+        };
       } catch (error) {
         if (error instanceof McpError) {
           throw error;
