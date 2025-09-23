@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * Simple build script for Brevo MCP Server
- * Copies source files to dist directory
+ * Build script for Brevo MCP Server
+ * Copies all source files to dist directory maintaining structure
  */
 
 import fs from 'fs';
@@ -22,32 +22,53 @@ if (!fs.existsSync(distDir)) {
   console.log('Created dist directory');
 }
 
-// Files to copy from root
-const rootFiles = ['index.js'];
-
-// Copy files from root to dist
-rootFiles.forEach(file => {
-  const srcPath = path.join(rootDir, file);
-  const destPath = path.join(distDir, file);
-  
-  if (fs.existsSync(srcPath)) {
-    fs.copyFileSync(srcPath, destPath);
-    console.log(`Copied ${file} to dist/`);
+// Function to copy directory recursively
+function copyDir(src, dest) {
+  // Create destination directory
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
   }
-});
 
-// If src directory exists, copy its contents
-if (fs.existsSync(srcDir)) {
-  const files = fs.readdirSync(srcDir);
+  // Read source directory
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+
+    if (entry.isDirectory()) {
+      // Skip node_modules and other build directories
+      if (entry.name === 'node_modules' || entry.name === 'dist' || entry.name === '.git') {
+        continue;
+      }
+      // Recursively copy subdirectory
+      copyDir(srcPath, destPath);
+    } else if (entry.isFile() && entry.name.endsWith('.js')) {
+      // Copy JavaScript files
+      fs.copyFileSync(srcPath, destPath);
+      console.log(`Copied ${path.relative(rootDir, srcPath)} to ${path.relative(rootDir, destPath)}`);
+    }
+  }
+}
+
+// Clear dist directory first (except backup files)
+if (fs.existsSync(distDir)) {
+  const files = fs.readdirSync(distDir);
   files.forEach(file => {
-    if (file.endsWith('.js')) {
-      fs.copyFileSync(
-        path.join(srcDir, file),
-        path.join(distDir, file)
-      );
-      console.log(`Copied src/${file} to dist/`);
+    if (!file.endsWith('.backup')) {
+      const filePath = path.join(distDir, file);
+      if (fs.lstatSync(filePath).isDirectory()) {
+        fs.rmSync(filePath, { recursive: true });
+      } else {
+        fs.unlinkSync(filePath);
+      }
     }
   });
 }
 
-console.log('Build completed successfully!');
+// Copy entire src directory structure to dist
+console.log('Building Brevo MCP Server...');
+copyDir(srcDir, distDir);
+
+console.log('\nBuild completed successfully!');
+console.log(`Output directory: ${path.relative(rootDir, distDir)}`);

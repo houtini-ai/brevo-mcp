@@ -8,7 +8,7 @@ MCP (Model Context Protocol) server for Brevo email marketing platform with comp
 
 1. **Install via npm:**
    ```bash
-   npm install -g @richardbaxterseo/brevo-mcp-server
+   npm install -g @houtini/brevo-mcp
    ```
 
 2. **Configure Claude Desktop:**
@@ -18,7 +18,7 @@ MCP (Model Context Protocol) server for Brevo email marketing platform with comp
      "mcpServers": {
        "brevo": {
          "command": "npx",
-         "args": ["-y", "@richardbaxterseo/brevo-mcp-server"],
+         "args": ["-y", "@houtini/brevo-mcp"],
          "env": {
            "BREVO_API_KEY": "your-brevo-api-key-here"
          }
@@ -33,8 +33,8 @@ MCP (Model Context Protocol) server for Brevo email marketing platform with comp
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/richardbaxterseo/brevo-mcp-server.git
-   cd brevo-mcp-server
+   git clone https://github.com/houtini-ai/brevo-mcp.git
+   cd brevo-mcp
    npm install
    npm run build
    ```
@@ -45,7 +45,7 @@ MCP (Model Context Protocol) server for Brevo email marketing platform with comp
      "mcpServers": {
        "brevo": {
          "command": "node",
-         "args": ["C:/path/to/brevo-mcp-server/dist/index.js"],
+         "args": ["C:/path/to/brevo-mcp/dist/index.js"],
          "env": {
            "BREVO_API_KEY": "your-brevo-api-key-here"
          }

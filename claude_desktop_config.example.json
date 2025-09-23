@@ -1,8 +1,8 @@
 {
   "mcpServers": {
     "brevo": {
-      "command": "node",
-      "args": ["C:\\MCP\\brevo-analysis\\brevo-api-mcp\\dist\\index.js"],
+      "command": "npx",
+      "args": ["-y", "@houtini/brevo-mcp"],
       "env": {
         "BREVO_API_KEY": "xkeysib-YOUR-API-KEY-HERE"
       }

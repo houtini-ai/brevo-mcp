@@ -1,6 +1,6 @@
 {
-  "name": "@richardbaxterseo/brevo-mcp-server",
-  "version": "2.1.1",
+  "name": "@houtini/brevo-mcp",
+  "version": "3.0.0",
   "description": "MCP (Model Context Protocol) server for Brevo email marketing platform with comprehensive analytics",
   "keywords": [
     "mcp",
@@ -12,17 +12,21 @@
     "analytics",
     "api",
     "claude",
-    "ai"
+    "ai",
+    "houtini"
   ],
-  "author": "Richard Baxter <richard@richardbaxter.co> (https://richardbaxter.co)",
+  "author": "Houtini Ltd <dev@houtini.ai> (https://houtini.ai)",
+  "contributors": [
+    "Richard Baxter <richard@richardbaxter.co>"
+  ],
   "license": "MIT",
-  "homepage": "https://github.com/richardbaxterseo/brevo-mcp-server#readme",
+  "homepage": "https://github.com/houtini-ai/brevo-mcp#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/richardbaxterseo/brevo-mcp-server.git"
+    "url": "git+https://github.com/houtini-ai/brevo-mcp.git"
   },
   "bugs": {
-    "url": "https://github.com/richardbaxterseo/brevo-mcp-server/issues"
+    "url": "https://github.com/houtini-ai/brevo-mcp/issues"
   },
   "type": "module",
   "main": "dist/index.js",
