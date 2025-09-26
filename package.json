@@ -1,6 +1,6 @@
 {
   "name": "@houtini/brevo-mcp",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "MCP (Model Context Protocol) server for Brevo email marketing platform with comprehensive analytics",
   "keywords": [
     "mcp",
