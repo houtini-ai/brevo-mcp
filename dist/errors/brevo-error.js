@@ -8,5 +8,6 @@ export class BrevoApiError extends Error {
     this.name = 'BrevoApiError';
     this.statusCode = statusCode;
     this.details = details;
+    this.body = details; // Add body property for compatibility
   }
 }

@@ -17,12 +17,19 @@ export class BrevoApiClient {
 
   async request(endpoint, options = {}) {
     const url = `${this.baseUrl}${endpoint}`;
+    
+    // Only set Content-Type if there's a body
+    const headers = {
+      'Accept': 'application/json',
+      'api-key': this.apiKey,
+    };
+    
+    if (options.body) {
+      headers['Content-Type'] = 'application/json';
+    }
+    
     const config = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'api-key': this.apiKey,
-      },
+      headers,
       timeout: CONFIG.REQUEST_TIMEOUT,
       ...options,
     };
@@ -40,6 +47,17 @@ export class BrevoApiClient {
 
       if (!response.ok) {
         await this.handleErrorResponse(response);
+      }
+
+      // Handle 204 No Content responses
+      if (response.status === 204) {
+        return {}; // Return empty object for No Content responses
+      }
+
+      // Check if response has content before trying to parse JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        return {}; // Return empty object if not JSON
       }
 
       return await response.json();
@@ -80,6 +98,10 @@ export class BrevoApiClient {
     case 403:
       throw new BrevoApiError(403, 'Access forbidden', errorObj);
     case 404:
+      // Provide more specific error messages for 404s
+      if (errorObj.code === 'document_not_found' || errorObj.message?.includes('campaign')) {
+        throw new BrevoApiError(404, 'Campaign not found. Please check the campaign ID.', errorObj);
+      }
       throw new BrevoApiError(404, 'Resource not found', errorObj);
     case 429:
       throw new BrevoApiError(429, 'Rate limit exceeded', errorObj);

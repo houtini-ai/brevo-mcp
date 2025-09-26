@@ -11,6 +11,7 @@ scripts/
 .vscode/
 .idea/
 .git/
+scripts/
 tests/
 test/
 test.js
@@ -20,6 +21,7 @@ test-analytics.js
 coverage/
 .nyc_output/
 jest.config.js
+jest.config.json
 fix-build.js
 
 # Configuration files
@@ -33,9 +35,11 @@ tsconfig.json
 
 # Documentation (keep essential docs)
 docs/
+developer_docs/
 examples/
 example/
 demo/
+images/
 *.md
 !README.md
 !CHANGELOG.md

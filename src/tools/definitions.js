@@ -260,4 +260,232 @@ export const TOOLS = [
       required: ['campaignId'],
     },
   },
+  // ============= NEW CAMPAIGN MANAGEMENT TOOLS =============
+  {
+    name: 'create_email_campaign',
+    description: 'Create a new email campaign in Brevo',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+          description: 'Internal campaign name',
+        },
+        subject: {
+          type: 'string',
+          description: 'Email subject line',
+        },
+        sender: {
+          type: 'object',
+          description: 'Sender information (optional - defaults to verified sender from account)',
+          properties: {
+            name: { type: 'string', description: 'Sender name' },
+            email: { type: 'string', format: 'email', description: 'Sender email (must be verified)' },
+            id: { type: 'number', description: 'Sender ID (alternative to email)' },
+          },
+        },
+        htmlContent: {
+          type: 'string',
+          description: 'HTML content of the email',
+        },
+        htmlUrl: {
+          type: 'string',
+          description: 'URL to fetch HTML content from',
+        },
+        templateId: {
+          type: 'number',
+          description: 'ID of existing Brevo template to use',
+        },
+        listIds: {
+          type: 'array',
+          description: 'List IDs to send campaign to',
+          items: { type: 'number' },
+        },
+        exclusionListIds: {
+          type: 'array',
+          description: 'List IDs to exclude from campaign',
+          items: { type: 'number' },
+        },
+        segmentIds: {
+          type: 'array',
+          description: 'Segment IDs to target',
+          items: { type: 'number' },
+        },
+        type: {
+          type: 'string',
+          description: 'Campaign type',
+          enum: ['classic', 'trigger'],
+          default: 'classic',
+        },
+        tag: {
+          type: 'string',
+          description: 'Campaign tag for organization',
+        },
+        replyTo: {
+          type: 'string',
+          format: 'email',
+          description: 'Reply-to email address',
+        },
+        scheduledAt: {
+          type: 'string',
+          description: 'ISO 8601 datetime to schedule campaign',
+        },
+        abTesting: {
+          type: 'boolean',
+          description: 'Enable A/B testing',
+          default: false,
+        },
+        sendAtBestTime: {
+          type: 'boolean',
+          description: 'Enable send time optimization',
+          default: false,
+        },
+        utmCampaign: {
+          type: 'string',
+          description: 'UTM campaign parameter for tracking',
+        },
+        params: {
+          type: 'object',
+          description: 'Template parameters if using templateId',
+        },
+      },
+      required: ['name', 'subject'], // sender is now optional - auto-detects from account
+    },
+  },
+  {
+    name: 'update_email_campaign',
+    description: 'Update an existing email campaign',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        campaignId: {
+          type: 'number',
+          description: 'ID of the campaign to update',
+          minimum: 1,
+        },
+        name: {
+          type: 'string',
+          description: 'Internal campaign name',
+        },
+        subject: {
+          type: 'string',
+          description: 'Email subject line',
+        },
+        sender: {
+          type: 'object',
+          description: 'Sender information',
+          properties: {
+            name: { type: 'string' },
+            email: { type: 'string', format: 'email' },
+          },
+        },
+        htmlContent: {
+          type: 'string',
+          description: 'HTML content of the email',
+        },
+        htmlUrl: {
+          type: 'string',
+          description: 'URL to fetch HTML content from',
+        },
+        templateId: {
+          type: 'number',
+          description: 'ID of existing Brevo template',
+        },
+        recipients: {
+          type: 'object',
+          description: 'Recipients configuration',
+          properties: {
+            listIds: { type: 'array', items: { type: 'number' } },
+            exclusionListIds: { type: 'array', items: { type: 'number' } },
+            segmentIds: { type: 'array', items: { type: 'number' } },
+          },
+        },
+        scheduledAt: {
+          type: 'string',
+          description: 'ISO 8601 datetime to reschedule campaign',
+        },
+        sendAtBestTime: {
+          type: 'boolean',
+          description: 'Enable send time optimization',
+        },
+        utmCampaign: {
+          type: 'string',
+          description: 'UTM campaign parameter',
+        },
+      },
+      required: ['campaignId'],
+    },
+  },
+  {
+    name: 'send_campaign_now',
+    description: 'Send an email campaign immediately',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        campaignId: {
+          type: 'number',
+          description: 'ID of the campaign to send',
+          minimum: 1,
+        },
+      },
+      required: ['campaignId'],
+    },
+  },
+  {
+    name: 'send_test_email',
+    description: 'Send a test version of a campaign to your pre-configured Brevo test list for review before sending to actual recipients',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        campaignId: {
+          type: 'number',
+          description: 'ID of the campaign to test',
+          minimum: 1,
+        },
+        emailTo: {
+          oneOf: [
+            { type: 'string', format: 'email' },
+            { type: 'array', items: { type: 'string', format: 'email' } },
+          ],
+          description: 'Optional: Override test list with specific emails. Normally omit this to use your pre-configured test list.',
+        },
+      },
+      required: ['campaignId'],
+    },
+  },
+  {
+    name: 'update_campaign_status',
+    description: 'Update campaign status (pause, resume, archive)',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        campaignId: {
+          type: 'number',
+          description: 'ID of the campaign',
+          minimum: 1,
+        },
+        status: {
+          type: 'string',
+          description: 'New campaign status',
+          enum: ['suspended', 'archive', 'darchive', 'sent', 'queued', 'replicate'],
+        },
+      },
+      required: ['campaignId', 'status'],
+    },
+  },
+  {
+    name: 'get_shared_template_url',
+    description: 'Get a shareable URL for a campaign template',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        campaignId: {
+          type: 'number',
+          description: 'ID of the campaign',
+          minimum: 1,
+        },
+      },
+      required: ['campaignId'],
+    },
+  },
 ];

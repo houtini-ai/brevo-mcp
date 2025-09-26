@@ -91,6 +91,31 @@ export class BrevoMCPServer {
           result = await this.brevoService.getCampaignRecipients(args);
           break;
 
+        // ============= NEW CAMPAIGN MANAGEMENT TOOLS =============
+        case 'create_email_campaign':
+          result = await this.brevoService.createEmailCampaign(args);
+          break;
+
+        case 'update_email_campaign':
+          result = await this.brevoService.updateEmailCampaign(args);
+          break;
+
+        case 'send_campaign_now':
+          result = await this.brevoService.sendCampaignNow(args);
+          break;
+
+        case 'send_test_email':
+          result = await this.brevoService.sendTestEmail(args);
+          break;
+
+        case 'update_campaign_status':
+          result = await this.brevoService.updateCampaignStatus(args);
+          break;
+
+        case 'get_shared_template_url':
+          result = await this.brevoService.getSharedTemplateUrl(args);
+          break;
+
         default:
           throw new McpError(
             ErrorCode.MethodNotFound,
@@ -108,6 +133,16 @@ export class BrevoMCPServer {
           ],
         };
       } catch (error) {
+        // Enhanced error logging for debugging
+        console.error('Tool execution error:', {
+          tool: toolName,
+          error: error.message,
+          statusCode: error.statusCode,
+          responseBody: error.body,
+          details: error.details,
+          stack: error.stack
+        });
+        
         if (error instanceof McpError) {
           throw error;
         }

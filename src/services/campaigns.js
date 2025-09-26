@@ -257,4 +257,159 @@ export class CampaignsService {
 
     return insights;
   }
+
+  // ============= NEW CRUD OPERATIONS =============
+
+  async createEmailCampaign(args) {
+    // Validate required fields
+    if (!args.name) {
+      throw new Error('Campaign name is required');
+    }
+    if (!args.subject) {
+      throw new Error('Campaign subject is required');
+    }
+
+    // Validate that at least one content source is provided
+    if (!args.htmlContent && !args.htmlUrl && !args.templateId) {
+      throw new Error('Either htmlContent, htmlUrl, or templateId is required');
+    }
+
+    // Handle sender intelligently - default to verified sender if not provided
+    let senderConfig;
+    if (!args.sender) {
+      // Auto-detect verified sender from existing campaigns
+      const campaigns = await this.getEmailCampaigns({ limit: 1, status: 'sent' });
+      if (campaigns.campaigns.length === 0) {
+        // Try draft campaigns if no sent ones
+        const draftCampaigns = await this.getEmailCampaigns({ limit: 1, status: 'draft' });
+        if (draftCampaigns.campaigns.length === 0) {
+          throw new Error('No verified sender found. Please provide sender information or create at least one campaign in Brevo dashboard first.');
+        }
+        senderConfig = draftCampaigns.campaigns[0].sender;
+      } else {
+        senderConfig = campaigns.campaigns[0].sender;
+      }
+      // Using auto-detected verified sender;
+    } else {
+      // Use provided sender but validate it
+      if (!args.sender.name) {
+        throw new Error('Sender name is required');
+      }
+      if (!args.sender.email && !args.sender.id) {
+        throw new Error('Either sender email or sender ID is required');
+      }
+      senderConfig = args.sender;
+    }
+
+    // Build campaign data
+    const campaignData = {
+      name: args.name,
+      subject: args.subject,
+      sender: {
+        name: senderConfig.name,
+        // Prefer ID over email for reliability
+        ...(senderConfig.id ? { id: senderConfig.id } : { email: senderConfig.email }),
+      },
+      // Handle either inline content or template
+      ...(args.htmlContent && { htmlContent: args.htmlContent }),
+      ...(args.htmlUrl && { htmlUrl: args.htmlUrl }),
+      ...(args.templateId && { templateId: args.templateId }),
+      // Recipients configuration - only include if there's actual data
+      ...((args.listIds || args.exclusionListIds || args.segmentIds) && {
+        recipients: {
+          ...(args.listIds && { listIds: args.listIds }),
+          ...(args.exclusionListIds && { exclusionListIds: args.exclusionListIds }),
+          ...(args.segmentIds && { segmentIds: args.segmentIds }),
+        }
+      }),
+      // Optional fields
+      ...(args.type && { type: args.type }),
+      ...(args.tag && { tag: args.tag }),
+      ...(args.replyTo && { replyTo: args.replyTo }),
+      ...(args.toField && { toField: args.toField }),
+      ...(args.scheduledAt && { scheduledAt: args.scheduledAt }),
+      ...(args.abTesting && { abTesting: args.abTesting }),
+      ...(args.subjectA && { subjectA: args.subjectA }),
+      ...(args.subjectB && { subjectB: args.subjectB }),
+      ...(args.splitRule && { splitRule: args.splitRule }),
+      ...(args.winnerCriteria && { winnerCriteria: args.winnerCriteria }),
+      ...(args.winnerDelay && { winnerDelay: args.winnerDelay }),
+      ...(args.ipWarmupEnable && { ipWarmupEnable: args.ipWarmupEnable }),
+      ...(args.initialQuota && { initialQuota: args.initialQuota }),
+      ...(args.increaseRate && { increaseRate: args.increaseRate }),
+      ...(args.unsubscriptionPageId && { unsubscriptionPageId: args.unsubscriptionPageId }),
+      ...(args.updateFormId && { updateFormId: args.updateFormId }),
+      ...(args.utmCampaign && { utmCampaign: args.utmCampaign }),
+      ...(args.params && { params: args.params }),
+      ...(args.sendAtBestTime && { sendAtBestTime: args.sendAtBestTime }),
+    };
+
+    const response = await this.apiClient.request('/emailCampaigns', {
+      method: 'POST',
+      body: JSON.stringify(campaignData),
+    });
+
+    return {
+      id: response.id,
+      name: args.name,
+      subject: args.subject,
+      status: 'draft',
+      message: 'Campaign created successfully',
+      createdAt: new Date().toISOString(),
+    };
+  }
+
+  async updateEmailCampaign(args) {
+    if (!args.campaignId) {
+      throw new Error('Campaign ID is required');
+    }
+
+    // Build update data - all fields are optional
+    const updateData = {
+      ...(args.name && { name: args.name }),
+      ...(args.subject && { subject: args.subject }),
+      ...(args.sender && { sender: args.sender }),
+      ...(args.htmlContent && { htmlContent: args.htmlContent }),
+      ...(args.htmlUrl && { htmlUrl: args.htmlUrl }),
+      ...(args.templateId && { templateId: args.templateId }),
+      ...(args.recipients && { recipients: args.recipients }),
+      ...(args.type && { type: args.type }),
+      ...(args.tag && { tag: args.tag }),
+      ...(args.replyTo && { replyTo: args.replyTo }),
+      ...(args.toField && { toField: args.toField }),
+      ...(args.scheduledAt && { scheduledAt: args.scheduledAt }),
+      ...(args.abTesting && { abTesting: args.abTesting }),
+      ...(args.subjectA && { subjectA: args.subjectA }),
+      ...(args.subjectB && { subjectB: args.subjectB }),
+      ...(args.splitRule && { splitRule: args.splitRule }),
+      ...(args.winnerCriteria && { winnerCriteria: args.winnerCriteria }),
+      ...(args.winnerDelay && { winnerDelay: args.winnerDelay }),
+      ...(args.ipWarmupEnable && { ipWarmupEnable: args.ipWarmupEnable }),
+      ...(args.initialQuota && { initialQuota: args.initialQuota }),
+      ...(args.increaseRate && { increaseRate: args.increaseRate }),
+      ...(args.unsubscriptionPageId && { unsubscriptionPageId: args.unsubscriptionPageId }),
+      ...(args.updateFormId && { updateFormId: args.updateFormId }),
+      ...(args.utmCampaign && { utmCampaign: args.utmCampaign }),
+      ...(args.params && { params: args.params }),
+      ...(args.sendAtBestTime && { sendAtBestTime: args.sendAtBestTime }),
+    };
+
+    // Check if there's anything to update
+    if (Object.keys(updateData).length === 0) {
+      throw new Error('No fields provided to update. Please specify at least one field to update.');
+    }
+
+    await this.apiClient.request(`/emailCampaigns/${args.campaignId}`, {
+      method: 'PUT',
+      body: JSON.stringify(updateData),
+    });
+
+    return {
+      id: args.campaignId,
+      status: 'updated',
+      message: 'Campaign updated successfully',
+      modifiedAt: new Date().toISOString(),
+      updatedFields: Object.keys(updateData),
+    };
+  }
 }

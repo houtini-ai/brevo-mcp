@@ -7,6 +7,8 @@ import { BrevoAnalyticsService } from './analytics.js';
 import { EmailService } from './email.js';
 import { ContactsService } from './contacts.js';
 import { CampaignsService } from './campaigns.js';
+import { CampaignDeliveryService } from './campaign-delivery.js';
+import { CampaignTemplatesService } from './campaign-templates.js';
 
 export class BrevoService {
   constructor(apiClient) {
@@ -14,6 +16,8 @@ export class BrevoService {
     this.emailService = new EmailService(apiClient);
     this.contactsService = new ContactsService(apiClient);
     this.campaignsService = new CampaignsService(apiClient);
+    this.campaignDeliveryService = new CampaignDeliveryService(apiClient);
+    this.campaignTemplatesService = new CampaignTemplatesService(apiClient);
   }
 
   async getAccountInfo() {
@@ -180,5 +184,34 @@ export class BrevoService {
 
   async getCampaignRecipients(args) {
     return this.campaignsService.getCampaignRecipients(args);
+  }
+
+  // ============= NEW CAMPAIGN MANAGEMENT METHODS =============
+
+  // Campaign CRUD operations (in campaigns.js)
+  async createEmailCampaign(args) {
+    return this.campaignsService.createEmailCampaign(args);
+  }
+
+  async updateEmailCampaign(args) {
+    return this.campaignsService.updateEmailCampaign(args);
+  }
+
+  // Campaign delivery operations (in campaign-delivery.js)
+  async sendCampaignNow(args) {
+    return this.campaignDeliveryService.sendCampaignNow(args);
+  }
+
+  async sendTestEmail(args) {
+    return this.campaignDeliveryService.sendTestEmail(args);
+  }
+
+  async updateCampaignStatus(args) {
+    return this.campaignDeliveryService.updateCampaignStatus(args);
+  }
+
+  // Campaign template operations (in campaign-templates.js)
+  async getSharedTemplateUrl(args) {
+    return this.campaignTemplatesService.getSharedTemplateUrl(args);
   }
 }
