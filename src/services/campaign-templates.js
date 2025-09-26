@@ -17,7 +17,7 @@ export class CampaignTemplatesService {
       `/emailCampaigns/${args.campaignId}/sharedUrl`,
       {
         method: 'GET',
-      }
+      },
     );
 
     return {

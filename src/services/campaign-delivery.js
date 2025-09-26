@@ -30,10 +30,10 @@ export class CampaignDeliveryService {
   /**
    * Send a test email for a campaign
    * Purpose: Test a campaign before sending to actual recipients
-   * 
+   *
    * Best practice: Omit emailTo to send to your pre-configured test list
    * The emailTo parameter is optional and should only be used for edge cases
-   * 
+   *
    * @param {Object} args
    * @param {number} args.campaignId - ID of the campaign to test
    * @param {string|array} [args.emailTo] - Optional: Override test list with specific emails
@@ -46,7 +46,7 @@ export class CampaignDeliveryService {
     // emailTo is optional - if not provided, sends to entire test list
     let testData = {};
     let recipientMessage = 'test list';
-    
+
     if (args.emailTo) {
       // Ensure emailTo is always an array
       const recipients = Array.isArray(args.emailTo) ? args.emailTo : [args.emailTo];

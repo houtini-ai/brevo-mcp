@@ -140,9 +140,9 @@ export class BrevoMCPServer {
           statusCode: error.statusCode,
           responseBody: error.body,
           details: error.details,
-          stack: error.stack
+          stack: error.stack,
         });
-        
+
         if (error instanceof McpError) {
           throw error;
         }
