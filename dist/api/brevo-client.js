@@ -17,17 +17,17 @@ export class BrevoApiClient {
 
   async request(endpoint, options = {}) {
     const url = `${this.baseUrl}${endpoint}`;
-    
+
     // Only set Content-Type if there's a body
     const headers = {
       'Accept': 'application/json',
       'api-key': this.apiKey,
     };
-    
+
     if (options.body) {
       headers['Content-Type'] = 'application/json';
     }
-    
+
     const config = {
       headers,
       timeout: CONFIG.REQUEST_TIMEOUT,

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.5] - 2025-09-30
+
+### Security
+- Fixed critical CVE-2025-7783 in form-data dependency (CVSS 9.4)
+- Upgraded @getbrevo/brevo from 2.2.0 to 3.0.1 to resolve deprecated request package vulnerabilities
+- Added npm overrides to force form-data@4.0.4 across entire dependency tree
+- Resolved moderate severity vulnerabilities in request and tough-cookie packages
+- All security audits now pass with zero vulnerabilities
+
+### Changed
+- Updated @getbrevo/brevo dependency to 3.0.1 (major version bump)
+- Removed 35 deprecated packages from dependency tree
+
 ## [3.0.0] - 2025-09-23
 
 ### Changed

@@ -320,7 +320,7 @@ export class CampaignsService {
           ...(args.listIds && { listIds: args.listIds }),
           ...(args.exclusionListIds && { exclusionListIds: args.exclusionListIds }),
           ...(args.segmentIds && { segmentIds: args.segmentIds }),
-        }
+        },
       }),
       // Optional fields
       ...(args.type && { type: args.type }),
