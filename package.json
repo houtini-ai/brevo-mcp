@@ -51,7 +51,7 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^1.18.0",
     "@getbrevo/brevo": "^3.0.1"
   },
   "devDependencies": {
