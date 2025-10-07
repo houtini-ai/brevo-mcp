@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
-    "@getbrevo/brevo": "^3.0.1"
+    "@getbrevo/brevo": "^2.5.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
