@@ -22,7 +22,7 @@ export class BrevoMCPServer {
     this.server = new Server(
       {
         name: 'brevo-mcp-server',
-        version: '2.1.1',
+        version: '3.0.6',
       },
       {
         capabilities: {
@@ -133,15 +133,7 @@ export class BrevoMCPServer {
           ],
         };
       } catch (error) {
-        // Enhanced error logging for debugging
-        console.error('Tool execution error:', {
-          tool: toolName,
-          error: error.message,
-          statusCode: error.statusCode,
-          responseBody: error.body,
-          details: error.details,
-          stack: error.stack,
-        });
+        process.stderr.write(`[${toolName}] ${error.message}\n`);
 
         if (error instanceof McpError) {
           throw error;

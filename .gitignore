@@ -26,9 +26,13 @@ dist/
 ehthumbs.db
 Thumbs.db
 
+# NPM auth
+.npmrc
+
 # IDE files
 .vscode/
 .idea/
+.claude/
 *.swp
 *.swo
 
