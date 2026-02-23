@@ -22,7 +22,7 @@ export class BrevoMCPServer {
     this.server = new Server(
       {
         name: 'brevo-mcp-server',
-        version: '3.0.6',
+        version: '3.0.7',
       },
       {
         capabilities: {
