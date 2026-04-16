@@ -5,7 +5,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![GitHub issues](https://img.shields.io/github/issues/houtini-ai/brevo-mcp)](https://github.com/houtini-ai/brevo-mcp/issues)
 [![GitHub stars](https://img.shields.io/github/stars/houtini-ai/brevo-mcp)](https://github.com/houtini-ai/brevo-mcp/stargazers)
-[![Known Vulnerabilities](https://snyk.io/test/github/houtini-ai/brevo-mcp/badge.svg)](https://snyk.io/test/github/houtini-ai/brevo-mcp)
 
 MCP (Model Context Protocol) server for Brevo email marketing platform with comprehensive campaign management, analytics, and automation capabilities.
 
